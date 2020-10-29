@@ -24,5 +24,5 @@ $router->get('settings', [
 
 $router->patch('settings/{name}', [
     'as' => 'settings.list',
-    'uses' => 'SettingsController@list'
+    'uses' => 'SettingsController@set'
 ]);
