@@ -11,19 +11,19 @@ const port = 8000;
 /**
  * Для хранения опций, вместо какого-то персистентного хранилища
  */
-const options = [
+const settings = [
     {
-        'name': 'rest_option_1',
+        'name': 'rest_setting_1',
         'type': 'string',
         'value': '',
     },
     {
-        'name': 'rest_option_2',
+        'name': 'rest_setting_2',
         'type': 'bool',
         'value': false,
     },
     {
-        'name': 'rest_option_3',
+        'name': 'rest_setting_3',
         'type': 'array',
         'value': [],
     },
@@ -32,13 +32,13 @@ const options = [
 const requestHandler = async (req, res) => {
     res.setHeader("Content-Type", "application/json");
 
-    if (req.method === 'GET' && req.url === '/options') {
+    if (req.method === 'GET' && req.url === '/settings') {
         res.writeHead(200);
-        res.end(JSON.stringify(options));
+        res.end(JSON.stringify(settings));
         return;
     }
     
-    const match = /^\/options\/(?<optionName>\w+)$/gi.exec(req.url);
+    const match = /^\/settings\/(?<settingName>\w+)$/gi.exec(req.url);
 
     if (req.method === 'PATCH' && match !== null) {
         let value = null;
@@ -60,7 +60,7 @@ const requestHandler = async (req, res) => {
         }
 
         try {
-            editOption(match.groups.optionName, value);
+            editSetting(match.groups.settingName, value);
         } catch (error) {
             sendHttpError(res, 422, error.message);
             return;
@@ -92,14 +92,14 @@ const getRequestBody = async (req) => {
       })
 }
 
-const editOption = (name, value) => {
-    if (!optionIsValid(name, value)) {
+const editSetting = (name, value) => {
+    if (!settingIsValid(name, value)) {
         throw new Error('Invalid setting type');
     }
 
-    for (const option of options) {
-        if (option.name === name) {
-            option.value = value;
+    for (const setting of settings) {
+        if (setting.name === name) {
+            setting.value = value;
             return;
         }
     }
@@ -107,21 +107,21 @@ const editOption = (name, value) => {
     throw new Error("Invalid setting name");
 }
 
-const optionIsValid = (name, value) => {
+const settingIsValid = (name, value) => {
     switch (name) {
-        case 'rest_option_1':
+        case 'rest_setting_1':
             if (typeof value !== 'string') {
                 return false;
             }
             break;
             
-        case 'rest_option_2':
+        case 'rest_setting_2':
             if (typeof value !== 'boolean') {
                 return false;
             }
             break;
 
-        case 'rest_option_3':
+        case 'rest_setting_3':
             if (!Array.isArray(value)) {
                 return false;
             }

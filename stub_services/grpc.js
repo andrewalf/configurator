@@ -7,19 +7,19 @@ const port = 8000;
 /**
  * Для хранения опций, вместо какого-то персистентного хранилища
  */
-const options = [
+const settings = [
     {
-        'name': 'grpc_option_1',
+        'name': 'grpc_setting_1',
         'type': 'int',
         'value': 0,
     },
     {
-        'name': 'grpc_option_2',
+        'name': 'grpc_setting_2',
         'type': 'string',
         'value': '',
     },
     {
-        'name': 'grpc_option_3',
+        'name': 'grpc_setting_3',
         'type': 'bool',
         'value': true,
     },
@@ -27,7 +27,7 @@ const options = [
 
 function GetSettings(call, callback) {
     const reply = new messages.SettingsResponse();
-    reply.setSettingsList(protoOptions())
+    reply.setSettingsList(getProtoSettings())
     callback(null, reply);
 }
 
@@ -35,14 +35,14 @@ function SetSetting(call, callback) {
     // TODO implement
 }
 
-function protoOptions() {
-    const res = [];
+function getProtoSettings() {
+    const rs = [];
 
-    for (const option of options) {
+    for (const setting of settings) {
         const optionMessage = new messages.Setting();
-        optionMessage.setName(option.name);
-        optionMessage.setType(option.type);
-        optionMessage.setValue(option.value);
+        optionMessage.setName(setting.name);
+        optionMessage.setType(setting.type);
+        optionMessage.setValue(setting.value);
         res.push(optionMessage);
     }
 
