@@ -19,7 +19,7 @@ class GrpcStub implements RemoteServiceSettingsInterface
 
     public function setSetting(string $name, $value): bool
     {
-        return random_int(0,1) < 0.5;
+        return rand(0,1) < 0.5;
     }
 
     public function getServiceName(): string
