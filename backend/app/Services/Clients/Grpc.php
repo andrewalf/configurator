@@ -9,7 +9,7 @@ use Grpcstub\GrpcStubClient;
 use \Google\Protobuf\GPBEmpty;
 use Grpcstub\SetSettingRequest;
 
-class Grps implements RemoteServiceSettingsInterface
+class Grpc implements RemoteServiceSettingsInterface
 {
     public function getSettings(): array
     {

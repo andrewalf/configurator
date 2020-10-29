@@ -8,7 +8,7 @@ use App\Entities\Setting;
  * Т.к. grpc на практике на проверить из-за бага (см readme), то буде использоваться заглушка.
  * Настоящий grpc-клиент я набросал, но подключать его в DI-контейнер не буду
  */
-class GrpsStub implements RemoteServiceSettingsInterface
+class GrpcStub implements RemoteServiceSettingsInterface
 {
     public function getSettings(): array
     {
