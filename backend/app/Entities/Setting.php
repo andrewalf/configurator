@@ -2,7 +2,12 @@
 
 namespace App\Entities;
 
-class Setting
+/**
+ * Мы не должны полагаться на формат предоставляемый сторонними сервисами.
+ * У нас есть энтити (хотя в этом сервисе это скорее DTO) и сервисы после получения
+ * данных конвертиуют их в "местные" энтити, которые уже гуляют по приложению
+ */
+class Setting implements \JsonSerializable
 {
     private string $name;
 
@@ -33,5 +38,14 @@ class Setting
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'name' => $this->name,
+            'type' => $this->type,
+            'value' => $this->value
+        ];
     }
 }

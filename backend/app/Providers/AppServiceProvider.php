@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\Clients\Grps;
+use App\Services\Clients\GrpsStub;
+use App\Services\Clients\Rest;
+use App\Services\SettingsService;
 use App\Transport\Guzzle;
 use App\Transport\HttpTransportInterface;
 use GuzzleHttp\Client;
@@ -25,9 +29,18 @@ class AppServiceProvider extends ServiceProvider
             );
         });
 
+
         $this->app->bind(
             HttpTransportInterface::class,
             Guzzle::class
         );
+
+        $this->app->bind(SettingsService::class, function () {
+            return new SettingsService([
+                $this->app->get(Rest::class),
+                new GrpsStub()
+//                new Grps(),
+            ]);
+        });
     }
 }
