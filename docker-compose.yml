@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  nginx:
+    container_name: configurator-nginx
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d/
+
+  php:
+    container_name: configurator-php
+    image: php:7.4-fpm-alpine
+    working_dir: /var/www
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./backend:/var/www
+
+  node_service_1:
+    container_name: configurator-node-1
+    image: node:10.23-alpine3.9
+    working_dir: /var/www/configurator/app
+    volumes:
+      - ./stub_services:/var/www/configurator/app
+    command: "node rest.js"
+    ports:
+      - "8001:8000"
+
+  node_service_2:
+    container_name: configurator-node-2
+    build:
+      context: .
+      dockerfile: docker/node_service_grpc/Dockerfile
+    ports:
+      - "8002:8000"

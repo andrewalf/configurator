@@ -1,0 +1,18 @@
+{
+  "name": "configurator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "protogen": "./node_modules/.bin/grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./  ./stub_services/grpc.proto"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grpc-tools": "^1.9.1"
+  },
+  "dependencies": {
+    "google-protobuf": "^3.13.0",
+    "grpc": "^1.24.3"
+  }
+}
