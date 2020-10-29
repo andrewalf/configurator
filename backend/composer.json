@@ -10,7 +10,8 @@
         "grpc/grpc": "^1.30",
         "guzzlehttp/guzzle": "^7.0",
         "laravel/lumen-framework": "^8.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-grpc": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.9.1",
