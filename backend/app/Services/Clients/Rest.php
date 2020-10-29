@@ -32,8 +32,13 @@ class Rest implements RemoteServiceSettingsInterface
 
         // тк по условию формат везде может отличаться - нет смысла делать фабрику
         // для маппинга данных сервисов на наши энтити. Но если формат один - это необходимо
-        foreach ($rawSettings as $rawSetting) {
-            $settings[] = new Setting($rawSetting['name'], $rawSetting['type'], $rawSetting['value']);
+        try {
+            foreach ($rawSettings as $rawSetting) {
+                $settings[] = new Setting($rawSetting['name'], $rawSetting['type'], $rawSetting['value']);
+            }
+        } catch (\ErrorException $e) {
+            // апи вернула поля НЕ согласно "документации"
+            throw new HttpTransportException('Settings response error: ' . $e->getMessage());
         }
 
         return $settings;
