@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Factories\RemoteServiceClientFactory;
 use App\Services\SettingsService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function list(SettingsService $settingsService)
+    public function list(SettingsService $settingsService): JsonResponse
     {
         try {
             $settings = $settingsService->getList();
@@ -19,7 +20,7 @@ class SettingsController extends Controller
         return $this->successResponse($settings);
     }
 
-    public function set(Request $request, RemoteServiceClientFactory $factory, string $name)
+    public function set(Request $request, RemoteServiceClientFactory $factory, string $name): JsonResponse
     {
         // я вообще люблю делать отдельные классы реквестов,
         // но люмен из коробки это не умеет, надо это самому прикручивать
